@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export class FetchData extends Component {
-    static displayName = FetchData.name;
+function FetchData(props) {
+    const displayName = FetchData.name;
 
-    constructor(props) {
-        super(props);
-        this.state = { forecasts: [], loading: true };
-    }
+    // Configure our state, and our setState standin methods.
+    const [forecasts, setForecasts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    componentDidMount() {
-        this.populateWeatherData();
-    }
-
-    // In-class react practice: Modify the table to display the precipitation.
-    static renderForecastsTable(forecasts) {
+    // Build the table based on forecast data.
+    function renderForecastsTable(forecasts) {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
@@ -40,23 +36,35 @@ export class FetchData extends Component {
         );
     }
 
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : FetchData.renderForecastsTable(this.state.forecasts);
-
-        return (
-            <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
-                {contents}
-            </div>
-        );
+    // Grab our data from our API.
+    async function populateWeatherData() {
+        // npm install --save axios
+        const response = await axios.get('weatherforecast');
+        setForecasts(response.data);
+        setLoading(false);
     }
 
-    async populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        this.setState({ forecasts: data, loading: false });
-    }
+    useEffect(() => {
+            populateWeatherData();
+    }, [loading]);
+
+    let contents = loading
+        ? <p><em>Loading...</em></p>
+        : renderForecastsTable(forecasts);
+
+    return (
+        <div>
+            <h1 id="tabelLabel" >Weather forecast</h1>
+            <p>This component demonstrates fetching data from the server.</p>
+            {contents}
+
+            <button className="btn btn-primary" onClick={() => { setLoading(true) }}>Refresh</button>
+        </div>
+    );
 }
+
+export { FetchData };
+
+
+
+
