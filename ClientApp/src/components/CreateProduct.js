@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Counter(props) {
+function CreateProduct(props) {
     const [currentCount, setCurrentCount] = useState(0);
     const displayName = props.name;
 
@@ -21,7 +21,7 @@ function Counter(props) {
     );
 }
 
-export { Counter };
+export { CreateProduct };
 
 
 
