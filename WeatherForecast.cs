@@ -14,6 +14,8 @@ namespace ReactAPI_4Point2
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
+        public string Precipitation { get; set; }
+
         public string Summary { get; set; }
     }
 }

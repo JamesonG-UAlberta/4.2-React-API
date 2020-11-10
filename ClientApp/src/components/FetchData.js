@@ -12,6 +12,7 @@ export class FetchData extends Component {
     this.populateWeatherData();
   }
 
+// In-class react practice: Modify the table to display the precipitation.
   static renderForecastsTable(forecasts) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
