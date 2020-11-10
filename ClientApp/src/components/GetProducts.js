@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function FetchData(props) {
-    const displayName = FetchData.name;
+function GetProducts(props) {
+    const displayName = GetProducts.name;
 
     // Configure our state, and our setState standin methods.
     const [products, setProducts] = useState([]);
@@ -23,10 +23,8 @@ function FetchData(props) {
                     {products.map(product =>
                         <tr key={product.id}>
                             <td>{product.id}</td>
-                            <td>{product.temperatureC}</td>
-                            <td>{product.temperatureF}</td>
-                            <td>{product.precipitation}</td>
-                            <td>{product.summary}</td>
+                            <td>{product.category.name}</td>
+                            <td>{product.name}</td>
                         </tr>
                     )}
                 </tbody>
@@ -61,7 +59,7 @@ function FetchData(props) {
     );
 }
 
-export { FetchData };
+export { GetProducts };
 
 
 
